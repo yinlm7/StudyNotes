@@ -1,6 +1,6 @@
 命令行安装virtualbox
 
-```
+```bash
 1. 下载、安装当前版本扩展或者apt安装
 
 wget https://download.virtualbox.org/virtualbox/$(VBoxManage -v | cut -d_ -f1)/Oracle_VM_VirtualBox_Extension_Pack-$(VBoxManage -v | cut -d_ -f1).vbox-extpack
@@ -49,7 +49,7 @@ VBoxManage showvminfo wifi 查看虚拟机i信息
 
 ubuntu设置开机启动
 
-```Go
+```bash
 # 下载安装VirtualBox7.0.10
 https://download.virtualbox.org/virtualbox/7.0.10/virtualbox-7.0_7.0.10-158379~Ubuntu~focal_amd64.deb
 dpkg -i virtualbox-7.0_7.0.10-158379~Ubuntu~focal_amd64.deb

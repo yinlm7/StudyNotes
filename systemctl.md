@@ -8,6 +8,7 @@
 - `systemctl disable <service>`：禁止一个服务开机自启动。
 - `systemctl list-unit-files`：列出所有的系统单元文件。
 - `systemctl daemon-reload`：重新加载配置文件，读取最新配置
+- `systemctl list-units --type=service --state=running`  查看运行的服务
 
 默认配置路径：`/etc/systemd/system/`
 
