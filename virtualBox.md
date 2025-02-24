@@ -1,3 +1,52 @@
+命令行安装virtualbox
+
+```
+1. 下载、安装当前版本扩展或者apt安装
+
+wget https://download.virtualbox.org/virtualbox/$(VBoxManage -v | cut -d_ -f1)/Oracle_VM_VirtualBox_Extension_Pack-$(VBoxManage -v | cut -d_ -f1).vbox-extpack
+
+VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-$(VBoxManage -v | cut -dr -f1).vbox-extpack
+
+apt安装
+apt install virtualbox-ext-pack
+
+
+2.配置host-only网络
+VBoxManage list hostonlyifs  列表
+VBoxManage hostonlyif create 创建
+VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 配置
+VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.100 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.254 --enable 启用dhcp
+VBoxManage modifyvm <VM_NAME> --nic1 hostonly --hostonlyadapter1 vboxnet0 虚拟机中使用hostonly网络
+VBoxManage hostonlyif remove vboxnet0 删除
+
+3.配置NAT网络
+VBoxManage list natnetworks 列表
+VBoxManage natnetwork add --netname NatNetwork --network "10.0.2.0/24" --dhcp on 创建
+VBoxManage natnetwork modify --netname NatNetwork --port-forward-4 "SSH:tcp:[127.0.0.1]:2222:[10.0.2.5]:22" 端口转发
+VBoxManage natnetwork start --netname NatNetwork 启用
+VBoxManage modifyvm "wifi" --nic2 natnetwork --nat-network1 NatNetwork 虚拟机连接到NAT网络
+VBoxManage natnetwork remove --netname NatNetwork 删除
+
+4.dhcp
+VBoxManage list dhcpservers dhcp 服务器列表
+VBoxManage dhcpserver add --netname HostInterfaceNetworking-vboxnet0 --ip 192.168.56.100 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.254 --enable 创建dhcp
+VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0 删除
+
+
+5.镜像操作
+VBoxManage import xxx.ova  导入镜像
+VBoxManage unregistervm "wifi" --delete 删除
+
+6.虚拟机操作
+VBoxManage controlvm wifi poweroff 关闭虚拟机
+VBoxManage startvm "wifi" --type headless  启动虚拟机
+VBoxManage showvminfo wifi 查看虚拟机i信息
+```
+
+
+
+
+
 ubuntu设置开机启动
 
 ```Go
